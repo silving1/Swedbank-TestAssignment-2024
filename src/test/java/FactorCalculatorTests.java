@@ -5,12 +5,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FactorCalculatorTests {
@@ -118,23 +118,21 @@ public class FactorCalculatorTests {
     //Test case to verify if factoring calculators result equals with manually calculated result
     @Test
     public void manualFactoringCalculator() {
-        //Calculate button is clicked by its id, results are shown by their ids
-
-        $(By.id("D5")).val("10000");
-        var iAmount = Double.parseDouble($(By.id("D5")).getText());
-        var aRate = Double.parseDouble($(By.id("D6")).getText());
-        var iRate = Double.parseDouble($(By.id("D7")).getText());
-        var pTerm = Double.parseDouble($(By.id("D8")).getText());
-        var cFee = Double.parseDouble($(By.id("D9")).getText());
+        var iAmount = Double.parseDouble(requireNonNull($(By.id("D5")).val()));
+        var aRate = Double.parseDouble(requireNonNull($(By.id("D6")).getSelectedOptionText()));
+        var iRate = Double.parseDouble(requireNonNull($(By.id("D7")).val()));
+        var pTerm = Double.parseDouble(requireNonNull($(By.id("D8")).getSelectedOptionText()));
+        var cFee = Double.parseDouble(requireNonNull($(By.id("D9")).val()));
 
         var amount = iAmount*aRate/100;
-        var fee = iAmount/cFee;
-        var interest = (amount*(iRate/100)*(pTerm/365));
+        var fee = iAmount*(cFee/100);
+        var interest = amount*(iRate/100)*(pTerm/365);
         var total = fee+interest;
+        var totalInPercent = (total/iAmount)*100;
 
-        //$(By.id("calculate-factoring")).click();
-        assertEquals(0000, total);
-
+        $(By.id("calculate-factoring")).click();
+        assertEquals(total, Double.parseDouble(requireNonNull($(By.id("result")).val())), 1.0);
+        assertEquals(totalInPercent, Double.parseDouble(requireNonNull($(By.id("result_perc")).val())), 0.1);
     }
 
     private void setValueAndVerify(String id, String expected) {
