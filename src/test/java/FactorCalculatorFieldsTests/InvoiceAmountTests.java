@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -20,7 +22,7 @@ public class InvoiceAmountTests {
         Configuration.browser = "chrome";
         open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
         //WebDriverRunner.getWebDriver().manage().window().maximize();
-        if ($("button.ui-cookie-consent__accept-button").is(visible)) {
+        if ($("button.ui-cookie-consent__accept-button").is(visible, Duration.ofSeconds(3))) {
             $(byText("Accept")).click();
         }
 
