@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class InvoiceAmountTests {
 
     SelenideElement errorMsg;
+    FactorCalculatorTests FCTests = new FactorCalculatorTests();
 
     //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
     @BeforeEach
@@ -53,6 +55,26 @@ public class InvoiceAmountTests {
         testValueInput("0000000000000001", "");
         testValueInput("199.000000.000", "");
         testValueInput("199.9999999999999999", "");
+    }
+    @Test
+    public void trueAndFalseInvoiceAmountValues() {
+        testValueInput("0", "Value must be greater than or equal 1.");
+        testValueInput("1000", "");
+        testValueInput("10+10", "Please enter a valid value.");
+        testValueInput("199", "");
+        testValueInput("1.001", "Step should be 0.01, nearest values are 1.00 and 1.01.");
+    }
+
+    // Test case, where user inputs false value and clicks Calculate button
+    @Test
+    public void falseInvoiceAmountValueAndCalculate() {
+        errorMsg.shouldNot(exist);
+        FCTests.doesFactoringCalculatorCalculateButtonCalculate();
+        testValueInput("0", "Value must be greater than or equal 1.");
+
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("0"));
+        $("#result").shouldHave(text("0"));
     }
 
     // Method to test a value in the Invoice Amount field and validate the error message
