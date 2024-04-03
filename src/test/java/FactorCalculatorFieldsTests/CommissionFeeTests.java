@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -12,7 +14,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class CommissionFeeTests {
 
     SelenideElement errorMsg;
-    //FactorCalculatorTests FCTests = new FactorCalculatorTests();
+    FactorCalculatorTests FCTests = new FactorCalculatorTests();
 
     //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
     @BeforeEach
@@ -20,7 +22,7 @@ public class CommissionFeeTests {
         Configuration.browser = "chrome";
         open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
         //WebDriverRunner.getWebDriver().manage().window().maximize();
-        if ($("button.ui-cookie-consent__accept-button").is(visible)) {
+        if ($("button.ui-cookie-consent__accept-button").is(visible, Duration.ofSeconds(3))) {
             $(byText("Accept")).click();
         }
 
@@ -53,6 +55,49 @@ public class CommissionFeeTests {
         testValueInput("0000000000000001", "");
         testValueInput("199.000000.000", "");
         testValueInput("199.9999999999999999", "");
+    }
+
+    //Test case, where user inputs true and false value after another
+    @Test
+    public void trueAndFalseCommissionFeeValues() {
+        //Tests, if the error message disappears after correct input and comes back, when inserted false input
+        testValueInput("aaa", "Please fill out this field.");
+        testValueInput("1000", "");
+        testValueInput("10+10", "Please enter a valid value.");
+        testValueInput("-199", "");
+        testValueInput("1.001", "Step should be 0.01, nearest values are 1.00 and 1.01.");
+    }
+
+    // Test case, where user inputs false value and clicks Calculate button
+    @Test
+    public void falseCommissionFeeValueAndCalculate() {
+        //Firstly checks, if initial calculation is done
+        errorMsg.shouldNot(exist);
+        FCTests.doesFactoringCalculatorCalculateButtonCalculate();
+
+        //Then adding user input the website doesn't like
+        testValueInput("aaa", "Please fill out this field.");
+
+        //After false input, the result should show 0
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("0"));
+        $("#result").shouldHave(text("0"));
+    }
+
+    // Test case, where user inputs true value and clicks Calculate button
+    @Test
+    public void trueCommissionFeeValueAndCalculate() {
+        //Firstly checks, if initial calculation is done
+        errorMsg.shouldNot(exist);
+        FCTests.doesFactoringCalculatorCalculateButtonCalculate();
+
+        //Then adding user input the website likes
+        testValueInput("-8888", "");
+
+        //After correct input, the result should show the made calculation
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("-8887.77"));
+        $("#result").shouldHave(text("-888777.50"));
     }
 
 
