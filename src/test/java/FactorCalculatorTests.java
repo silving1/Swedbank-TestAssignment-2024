@@ -135,6 +135,17 @@ public class FactorCalculatorTests {
         assertEquals(totalInPercent, Double.parseDouble(requireNonNull($(By.id("result_perc")).val())), 0.1);
     }
 
+    //Test case to verify if factoring calculators result equals with manually calculated result
+    @Test
+    public void manualCalculatorInsertedValues() {
+        setValueAndVerify("D5", "200");
+        setValueAndVerify("D7", "20");
+        setValueAndVerify("D9", "5");
+        setSelectOptionAndVerify("D6", "90");
+        setSelectOptionAndVerify("D8", "120");
+        manualFactoringCalculator();
+    }
+
     private void setValueAndVerify(String id, String expected) {
         $(By.id(id)).val(expected);
         assertEquals(expected, $(By.id(id)).val());
