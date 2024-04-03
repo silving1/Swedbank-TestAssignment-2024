@@ -32,12 +32,17 @@ public abstract class BaseFieldsTest {
 
     // Helper method to test a value in the corresponding field and validate the error message
     protected void testValueInput(String fieldId, String value, String expectedErrorMessage) {
+        //Inserts the user value to field
         $(By.id(fieldId)).val(value);
+
+        //Checks, if the expected error message is empty
         if (!expectedErrorMessage.isEmpty()) {
+            //The expected error message is not empty. The system confirms, if the expectation is correct
             errorMsg.should(exist);
             errorMsg.shouldBe(visible);
             errorMsg.shouldHave(text(expectedErrorMessage));
         } else {
+            //The expected error message is empty. The system confirms, if the expectation is correct
             errorMsg.shouldNot(exist);
         }
     }
