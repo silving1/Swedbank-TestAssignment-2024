@@ -1,5 +1,6 @@
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,11 +61,17 @@ public class FactorCalculatorTests {
     }
     @Test
     public void isFactoringCalculatorCalculateButtonExists() {
-        $("#calculate-factoring").should(exist); $("#calculate-factoring").shouldBe(visible);
-        $("#result_perc").should(exist); $("#result_perc").shouldBe(visible);
-        $("#result_perc").shouldHave(text("0"));
-        $("#result").should(exist); $("#result").shouldBe(visible);
-        $("#result").shouldHave(text("0.00"));
+        SelenideElement calculateButton = $("#calculate-factoring");
+        SelenideElement resultPerc = $("#result_perc");
+        SelenideElement result = $("#result");
+
+        calculateButton.should(exist); calculateButton.shouldBe(visible);
+
+        resultPerc.should(exist); resultPerc.shouldBe(visible);
+        resultPerc.shouldHave(text("0"));
+
+        result.should(exist); result.shouldBe(visible);
+        result.shouldHave(text("0.00"));
     }
     @Test
     public void doesFactoringCalculatorCalculateButtonCalculate() {
