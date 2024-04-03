@@ -29,8 +29,9 @@ public class InterestRateTests {
     @AfterEach
     public void tearDown() { closeWebDriver(); }
 
+    //Different test scenarios, where user tries to input false values to Interest Rate field
     @Test
-    public void falseInvoiceAmountValues() {
+    public void falseInterestRateValues() {
         //Made a private helper method below to help me repeat each test.
         //Firstly inputs value the website doesn't like, then it should return error corresponding message
         testValueInput("-5000", "Value must be greater than or equal 0.");
@@ -41,9 +42,9 @@ public class InterestRateTests {
         testValueInput("20.0000000000000001", "Value must be less than or equal 20.");
     }
 
-    //Different test scenarios, where user tries to input unusual, but true values to Invoice Amount field
+    //Different test scenarios, where user tries to input unusual, but true values to Interest Rate field
     @Test
-    public void trueInvoiceAmountValues() {
+    public void trueInterestRateValues() {
         //Firstly inputs value the website likes, there should be no error messages
         testValueInput("0", "");
         testValueInput("0000000000000001", "");
@@ -52,7 +53,7 @@ public class InterestRateTests {
     }
 
 
-    // Helper method to test a value in the Invoice Amount field and validate the error message
+    // Helper method to test a value in the Interest Rate field and validate the error message
     private void testValueInput(String value, String expectedErrorMessage) {
         //Inserts the user value to field
         $("#D7").val(value);
