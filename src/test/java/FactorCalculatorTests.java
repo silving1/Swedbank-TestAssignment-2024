@@ -34,4 +34,16 @@ public class FactorCalculatorTests {
         $("#D6").should(exist); $("#D6").shouldBe(visible);
         $("#D8").should(exist); $("#D8").shouldBe(visible);
     }
+    @Test
+    public void canAddValuesToFactoringCalculatorFields() {
+        open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
+        $(byText("Accept")).click();
+
+        $("#D5").val("9000");
+        $("#D7").val("15");
+        $("#D9").val("1");
+
+        $("#D6").selectOption("80");
+        $("#D8").selectOption("60");
+    }
 }
