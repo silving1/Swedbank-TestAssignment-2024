@@ -81,24 +81,11 @@ public class FactorCalculatorTests {
     //Test case to verify if inserted value is actually inserted
     @Test
     public void isInsertedValuesInserted() {
-        //Each fields value is inserted after its id, the added values are all acceptable
-        $(By.id("D5")).val("9000");
-        $(By.id("D7")).val("15");
-        $(By.id("D9")).val("1");
-        $(By.id("D6")).selectOption("80");
-        $(By.id("D8")).selectOption("60");
-
-        String valueD5 = $(By.id("D5")).val();
-        String valueD7 = $(By.id("D7")).val();
-        String valueD9 = $(By.id("D9")).val();
-        String selectedOptionD6 = $(By.id("D6")).getSelectedOptionText();
-        String selectedOptionD8 = $(By.id("D8")).getSelectedOptionText();
-
-        assertEquals("9000", valueD5);
-        assertEquals("15", valueD7);
-        assertEquals("1", valueD9);
-        assertEquals("80", selectedOptionD6);
-        assertEquals("60", selectedOptionD8);
+        setValueAndVerify("D5", "9000");
+        setValueAndVerify("D7", "15");
+        setValueAndVerify("D9", "1");
+        setSelectOptionAndVerify("D6", "80");
+        setSelectOptionAndVerify("D8", "60");
     }
 
     //Test case to verify if Factoring Calculator has calculation button and shows results
@@ -135,10 +122,10 @@ public class FactorCalculatorTests {
 
         $(By.id("D5")).val("10000");
         var iAmount = Double.parseDouble($(By.id("D5")).getText());
-        double aRate = Double.parseDouble($(By.id("D6")).getText());
-        double iRate = Double.parseDouble($(By.id("D7")).getText());
-        double pTerm = Double.parseDouble($(By.id("D8")).getText());
-        double cFee = Double.parseDouble($(By.id("D9")).getText());
+        var aRate = Double.parseDouble($(By.id("D6")).getText());
+        var iRate = Double.parseDouble($(By.id("D7")).getText());
+        var pTerm = Double.parseDouble($(By.id("D8")).getText());
+        var cFee = Double.parseDouble($(By.id("D9")).getText());
 
         var amount = iAmount*aRate/100;
         var fee = iAmount/cFee;
@@ -148,6 +135,15 @@ public class FactorCalculatorTests {
         //$(By.id("calculate-factoring")).click();
         assertEquals(0000, total);
 
+    }
 
+    private void setValueAndVerify(String id, String expected) {
+        $(By.id(id)).val(expected);
+        assertEquals(expected, $(By.id(id)).val());
+    }
+
+    private void setSelectOptionAndVerify(String id, String expected) {
+        $(By.id(id)).selectOption(expected);
+        assertEquals(expected, $(By.id(id)).getSelectedOptionText());
     }
 }
