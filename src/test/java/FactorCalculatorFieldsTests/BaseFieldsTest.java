@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public abstract class BaseFieldsTest {
     protected SelenideElement errorMsg;
+    FactorCalculatorTests FCTests = new FactorCalculatorTests();
 
     //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
     @BeforeEach
