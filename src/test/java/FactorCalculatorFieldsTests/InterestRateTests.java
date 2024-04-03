@@ -9,8 +9,8 @@ public class InterestRateTests extends BaseFieldsTest {
     //Different test scenarios, where user tries to input false values to Interest Rate field
     @Test
     public void falseInterestRateValues() {
-        //Made a private helper method below to help me repeat each test.
-        //Firstly inputs value the website doesn't like, then it should return error corresponding message
+        //User inputs value the website doesn't like, should return corresponding error message
+        //Inputs are sent to helper method in BaseFieldsTest class
         testValueInput("D7","-5000", "Value must be greater than or equal 0.");
         testValueInput("D7","abc", "Please fill out this field.");
         testValueInput("D7","-.", "Please enter a valid value.");
@@ -22,7 +22,8 @@ public class InterestRateTests extends BaseFieldsTest {
     //Different test scenarios, where user tries to input unusual, but true values to Interest Rate field
     @Test
     public void trueInterestRateValues() {
-        //Firstly inputs value the website likes, there should be no error messages
+        //User inputs value the website likes, there should be no error message
+        //Inputs are sent to helper method in BaseFieldsTest class
         testValueInput("D7","0", "");
         testValueInput("D7","0000000000000001", "");
         testValueInput("D7","19.0000.000", "");
@@ -32,7 +33,7 @@ public class InterestRateTests extends BaseFieldsTest {
     //Test case, where user inputs true and false value after another
     @Test
     public void trueAndFalseInterestRateValues() {
-        //Tests, if the error message disappears after correct input and comes back, when inserted false input
+        //Checks, if the error message disappears after correct input and comes back, when inserted false input
         testValueInput("D7","-1", "Value must be greater than or equal 0.");
         testValueInput("D7","10", "");
         testValueInput("D7","10+10", "Please enter a valid value.");
@@ -47,24 +48,26 @@ public class InterestRateTests extends BaseFieldsTest {
         errorMsg.shouldNot(exist);
         FCTests.doesFactoringCalculatorCalculateButtonCalculate();
 
-        //Then adding user input the website doesn't like
+        //Then adding input the website doesn't like
         testValueInput("D7","-10", "Value must be greater than or equal 0.");
 
         //After false input, the result should show 0
+        //Expected values are sent to helper method in BaseFieldsTest class
         testCalculation("0", "0");
     }
 
-    // Test case, where user inputs true value and clicks Calculate button
+    // Test case, where user inputs correct value and clicks Calculate button
     @Test
     public void trueInterestRateValueAndCalculate() {
         //Firstly checks, if initial calculation is done
         errorMsg.shouldNot(exist);
         FCTests.doesFactoringCalculatorCalculateButtonCalculate();
 
-        //Then adding user input the website likes
+        //Then adding input the website likes
         testValueInput("D7","0", "");
 
         //After correct input, the result should show the made calculation
+        //Expected values are sent to helper method in BaseFieldsTest class
         testCalculation("0.30", "30.00");
     }
 }

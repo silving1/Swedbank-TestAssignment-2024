@@ -8,8 +8,8 @@ public class InvoiceAmountTests extends BaseFieldsTest {
     //Different test scenarios, where user tries to input false values to Invoice Amount field
     @Test
     public void falseInvoiceAmountValues() {
-        //Made a private helper method below to help me repeat each test.
-        //Firstly inputs value the website doesn't like, then it should return error corresponding message
+        //User inputs value the website doesn't like, should return corresponding error message
+        //Inputs are sent to helper method in BaseFieldsTest class
         testValueInput("D5","0", "Value must be greater than or equal 1.");
         testValueInput("D5","-5000", "Value must be greater than or equal 1.");
         testValueInput("D5","abc", "Please fill out this field.");
@@ -22,7 +22,8 @@ public class InvoiceAmountTests extends BaseFieldsTest {
     //Different test scenarios, where user tries to input unusual, but true values to Invoice Amount field
     @Test
     public void trueInvoiceAmountValues() {
-        //Firstly inputs value the website likes, there should be no error messages
+        //User inputs value the website likes, there should be no error messages
+        //Inputs are sent to helper method in BaseFieldsTest class
         testValueInput("D5","1", "");
         testValueInput("D5","1000000000000000000000000000", "");
         testValueInput("D5","0000000000000001", "");
@@ -52,10 +53,11 @@ public class InvoiceAmountTests extends BaseFieldsTest {
         testValueInput("D5","0", "Value must be greater than or equal 1.");
 
         //After false input, the result should show 0
+        //Expected values are sent to helper method in BaseFieldsTest class
         testCalculation("0","0");
     }
 
-    // Test case, where user inputs true value and clicks Calculate button
+    // Test case, where user inputs correct value and clicks Calculate button
     @Test
     public void trueInvoiceAmountValueAndCalculate() {
         //Firstly checks, if initial calculation is done
@@ -66,6 +68,7 @@ public class InvoiceAmountTests extends BaseFieldsTest {
         testValueInput("D5","10000000000000000000000000000", "");
 
         //After correct input, the result should show the made calculation
+        //Expected values are sent to helper method in BaseFieldsTest class
         testCalculation("0.53","5.25e+25");
     }
 }

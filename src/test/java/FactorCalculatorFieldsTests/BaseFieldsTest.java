@@ -47,6 +47,7 @@ public abstract class BaseFieldsTest {
         }
     }
 
+    //Helper method, which shows the made calculation
     protected void testCalculation(String expectedResultPerc, String expectedResult) {
         $(By.id("calculate-factoring")).click();
         $("#result_perc").shouldHave(text(expectedResultPerc));
