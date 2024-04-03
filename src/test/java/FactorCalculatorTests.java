@@ -39,7 +39,7 @@ public class FactorCalculatorTests {
         String url = WebDriverRunner.url();
 
         //Checks, if the saved URL matches with expected URL
-        assertEquals(url, "https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
+        assertEquals("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG", url);
     }
 
     //Test case to verify if the website has the Factoring Calculator in it
@@ -58,37 +58,47 @@ public class FactorCalculatorTests {
     public void isFieldsExists() {
         //Each field is searched after its id, verifies that its on the website and is visible
         //for the user
-        $("#D5").should(exist); $("#D5").shouldBe(visible);
-        $("#D7").should(exist); $("#D7").shouldBe(visible);
-        $("#D9").should(exist); $("#D9").shouldBe(visible);
+        $(By.id("D5")).should(exist); $(By.id("D5")).shouldBe(visible);
+        $(By.id("D7")).should(exist); $(By.id("D7")).shouldBe(visible);
+        $(By.id("D9")).should(exist); $(By.id("D9")).shouldBe(visible);
 
         //Same for dropdown menu items
-        $("#D6").should(exist); $("#D6").shouldBe(visible);
-        $("#D8").should(exist); $("#D8").shouldBe(visible);
+        $(By.id("D6")).should(exist); $(By.id("D6")).shouldBe(visible);
+        $(By.id("D8")).should(exist); $(By.id("D8")).shouldBe(visible);
     }
 
     //Test case to verify if the user can interact with the calculators fields
     @Test
     public void canAddValuesToFields() {
         //Each fields value is inserted after its id, the added values are all acceptable
-        $("#D5").val("9000");
-        $("#D7").val("15");
-        $("#D9").val("1");
-
-        $("#D6").selectOption("80");
-        $("#D8").selectOption("60");
+        $(By.id("D5")).val("9000");
+        $(By.id("D7")).val("15");
+        $(By.id("D9")).val("1");
+        $(By.id("D6")).selectOption("80");
+        $(By.id("D8")).selectOption("60");
     }
 
     //Test case to verify if inserted value is actually inserted
     @Test
     public void isInsertedValuesInserted() {
         //Each fields value is inserted after its id, the added values are all acceptable
-        $("#D5").val("9000");
-        $("#D7").val("15");
-        $("#D9").val("1");
+        $(By.id("D5")).val("9000");
+        $(By.id("D7")).val("15");
+        $(By.id("D9")).val("1");
+        $(By.id("D6")).selectOption("80");
+        $(By.id("D8")).selectOption("60");
 
-        $("#D6").selectOption("80");
-        $("#D8").selectOption("60");
+        String valueD5 = $(By.id("D5")).val();
+        String valueD7 = $(By.id("D7")).val();
+        String valueD9 = $(By.id("D9")).val();
+        String selectedOptionD6 = $(By.id("D6")).getSelectedOptionText();
+        String selectedOptionD8 = $(By.id("D8")).getSelectedOptionText();
+
+        assertEquals("9000", valueD5);
+        assertEquals("15", valueD7);
+        assertEquals("1", valueD9);
+        assertEquals("80", selectedOptionD6);
+        assertEquals("60", selectedOptionD8);
     }
 
     //Test case to verify if Factoring Calculator has calculation button and shows results
