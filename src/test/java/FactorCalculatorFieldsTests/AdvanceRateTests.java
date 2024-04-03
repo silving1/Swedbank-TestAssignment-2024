@@ -11,7 +11,6 @@ public class AdvanceRateTests extends BaseFieldsTest {
 
     SelenideElement id = $(By.id("D6"));
 
-
     //Test case to verify if correct values are selectable from the dropdown menu
     @Test
     public void isCorrectAdvanceRateValues() {
@@ -27,20 +26,10 @@ public class AdvanceRateTests extends BaseFieldsTest {
         //List together all elements
         ElementsCollection elementList = id.getSelectedOptions();
 
-        //Check, if a false value is in list using helper method below
+        //Check, if a false value is in list using helper method in BaseFieldsTest
         assertFalse(doesValueExist(elementList, "100"));
         assertFalse(doesValueExist(elementList, "0"));
         assertFalse(doesValueExist(elementList, ""));
         assertFalse(doesValueExist(elementList, "abc"));
-    }
-
-    //Helper method to loop each checkable value through the list
-    private boolean doesValueExist(ElementsCollection elementList, String valueToCheck) {
-        for (SelenideElement element : elementList) {
-            if (element.equals(valueToCheck)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

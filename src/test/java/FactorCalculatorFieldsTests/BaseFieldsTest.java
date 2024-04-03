@@ -1,4 +1,5 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,5 +53,15 @@ public abstract class BaseFieldsTest {
         $(By.id("calculate-factoring")).click();
         $("#result_perc").shouldHave(text(expectedResultPerc));
         $("#result").shouldHave(text(expectedResult));
+    }
+
+    //Helper method to loop each checkable value through the list
+    protected boolean doesValueExist(ElementsCollection elementList, String valueToCheck) {
+        for (SelenideElement element : elementList) {
+            if (element.equals(valueToCheck)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
