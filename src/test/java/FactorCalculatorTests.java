@@ -2,6 +2,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -45,5 +46,25 @@ public class FactorCalculatorTests {
 
         $("#D6").selectOption("80");
         $("#D8").selectOption("60");
+    }
+    @Test
+    public void isFactoringCalculatorCalculateButtonExists() {
+        open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
+        $(byText("Accept")).click();
+
+        $("#calculate-factoring").should(exist); $("#calculate-factoring").shouldBe(visible);
+        $("#result_perc").should(exist); $("#result_perc").shouldBe(visible);
+        $("#result_perc").shouldHave(text("0"));
+        $("#result").should(exist); $("#result").shouldBe(visible);
+        $("#result").shouldHave(text("0.00"));
+    }
+    @Test
+    public void doesFactoringCalculatorCalculateButtonCalculate() {
+        open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
+        $(byText("Accept")).click();
+
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("0.53"));
+        $("#result").shouldHave(text("52.50"));
     }
 }
