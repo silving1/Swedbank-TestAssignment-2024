@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class InterestRateTests {
     SelenideElement errorMsg;
+    FactorCalculatorTests FCTests = new FactorCalculatorTests();
 
     //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
     @BeforeEach
@@ -52,6 +53,48 @@ public class InterestRateTests {
         testValueInput("20.0000000000000000001", "");
     }
 
+    //Test case, where user inputs true and false value after another
+    @Test
+    public void trueAndFalseInterestRateValues() {
+        //Tests, if the error message disappears after correct input and comes back, when inserted false input
+        testValueInput("-1", "Value must be greater than or equal 0.");
+        testValueInput("10", "");
+        testValueInput("10+10", "Please enter a valid value.");
+        testValueInput("20", "");
+        testValueInput("1.001", "Step should be 0.01, nearest values are 1.00 and 1.01.");
+    }
+
+    // Test case, where user inputs false value and clicks Calculate button
+    @Test
+    public void falseInterestRateValueAndCalculate() {
+        //Firstly checks, if initial calculation is done
+        errorMsg.shouldNot(exist);
+        FCTests.doesFactoringCalculatorCalculateButtonCalculate();
+
+        //Then adding user input the website doesn't like
+        testValueInput("-10", "Value must be greater than or equal 0.");
+
+        //After false input, the result should show 0
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("0"));
+        $("#result").shouldHave(text("0"));
+    }
+
+    // Test case, where user inputs true value and clicks Calculate button
+    @Test
+    public void trueInterestRateValueAndCalculate() {
+        //Firstly checks, if initial calculation is done
+        errorMsg.shouldNot(exist);
+        FCTests.doesFactoringCalculatorCalculateButtonCalculate();
+
+        //Then adding user input the website likes
+        testValueInput("0", "");
+
+        //After correct input, the result should show the made calculation
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("0.30"));
+        $("#result").shouldHave(text("30.00"));
+    }
 
     // Helper method to test a value in the Interest Rate field and validate the error message
     private void testValueInput(String value, String expectedErrorMessage) {
