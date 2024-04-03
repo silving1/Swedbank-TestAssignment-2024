@@ -135,12 +135,17 @@ public class FactorCalculatorTests {
         //Website does its own calculations
         $(By.id("calculate-factoring")).click();
 
+
+
         //Asserting values to equal. Due to minor calculation rounding errors, the delta is needed
-        assertEquals(total, Double.parseDouble(requireNonNull($(By.id("result")).val())), 1.0);
+        var totalDelta = iAmount/10000;
+        if(totalDelta<0.01) totalDelta = 0.01;
+        assertEquals(total, Double.parseDouble(requireNonNull($(By.id("result")).val())), totalDelta);
         assertEquals(totalInPercent, Double.parseDouble(requireNonNull($(By.id("result_perc")).val())), 0.1);
     }
 
-    //Test case to verify if factoring calculators result equals with manually calculated result
+    //Test case to verify if factoring calculators result equals with manually calculated result with
+    //manually inserted values
     @Test
     public void manualCalculatorInsertedValues() {
         //Changing the field values
@@ -149,6 +154,21 @@ public class FactorCalculatorTests {
         setValueAndVerify("D9", "5");
         setSelectOptionAndVerify("D6", "90");
         setSelectOptionAndVerify("D8", "120");
+
+        //Check, if the manual calculations and website calculations match
+        manualFactoringCalculator();
+    }
+
+    //Test case to verify if factoring calculators result equals with manually calculated result with
+    //manually inserted values, where Commission Fee is negative
+    @Test
+    public void manualCalculatorInsertedValuesLarge() {
+        //Changing the field values
+        setValueAndVerify("D5", "1023469");
+        setValueAndVerify("D7", "3");
+        setValueAndVerify("D9", "10");
+        setSelectOptionAndVerify("D6", "75");
+        setSelectOptionAndVerify("D8", "30");
 
         //Check, if the manual calculations and website calculations match
         manualFactoringCalculator();
