@@ -43,7 +43,7 @@ public class FactorCalculatorTests {
     //Test case to verify if the website has the Factoring Calculator in it
     @Test
     public void isFactoringCalculatorExists() {
-        //I wanted to search for Factoring Calculator under "h2", but couldn't succeed. Instead
+        //I wanted to search for Factoring Calculator under "h2", but couldn't succeed. Instead,
         //it searches, if the website has text Factoring in
         $("h1").shouldHave(text("Factoring"));
 
@@ -95,8 +95,7 @@ public class FactorCalculatorTests {
         result.shouldHave(text("0.00"));
     }
 
-    //Test case to verify if calculate button correctly calculates the websites
-    // default values
+    //Test case to verify if calculate button correctly calculates the websites default values
     @Test
     public void doesFactoringCalculatorCalculateButtonCalculate() {
         //Calculate button is clicked by its id, results are shown by their ids
