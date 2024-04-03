@@ -1,5 +1,4 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +8,6 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InvoiceAmountTests {
 
@@ -56,6 +54,8 @@ public class InvoiceAmountTests {
         testValueInput("199.000000.000", "");
         testValueInput("199.9999999999999999", "");
     }
+
+    //Test case, where user inputs true and false value after another
     @Test
     public void trueAndFalseInvoiceAmountValues() {
         testValueInput("0", "Value must be greater than or equal 1.");
@@ -75,6 +75,18 @@ public class InvoiceAmountTests {
         $(By.id("calculate-factoring")).click();
         $("#result_perc").shouldHave(text("0"));
         $("#result").shouldHave(text("0"));
+    }
+
+    // Test case, where user inputs true value and clicks Calculate button
+    @Test
+    public void trueInvoiceAmountValueAndCalculate() {
+        errorMsg.shouldNot(exist);
+        FCTests.doesFactoringCalculatorCalculateButtonCalculate();
+        testValueInput("10000000000000000000000000000", "");
+
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("0.53"));
+        $("#result").shouldHave(text("5.25e+25"));
     }
 
     // Method to test a value in the Invoice Amount field and validate the error message
