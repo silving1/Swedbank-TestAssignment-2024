@@ -29,9 +29,7 @@ public class InvoiceAmountTests {
 
     //After each test, the website is closed and can start over with fresh test inputs
     @AfterEach
-    public void tearDown() {
-        closeWebDriver();
-    }
+    public void tearDown() { closeWebDriver(); }
 
     //Different test scenarios, where user tries to input false values to Invoice Amount field
     @Test
