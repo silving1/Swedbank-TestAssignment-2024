@@ -32,4 +32,18 @@ public class AdvanceRateTests extends BaseFieldsTest {
         assertFalse(doesValueExist(elementList, ""));
         assertFalse(doesValueExist(elementList, "abc"));
     }
+
+    //Test case to verify if the dropdown menu count is true
+    @Test
+    public void isCorrectAdvanceRateCount() {
+        //List together all elements
+        ElementsCollection elementList = id.getOptions();
+
+        //Since there is only 4 options to select, it must return 4 elements
+        assertEquals(4, elementList.size());
+
+        //Checks, if there are more or less than firstly expected elements
+        assertNotEquals(5, elementList.size());
+        assertNotEquals(3, elementList.size());
+    }
 }
