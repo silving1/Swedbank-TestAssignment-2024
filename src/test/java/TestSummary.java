@@ -45,5 +45,7 @@ public class TestSummary implements TestWatcher {
         System.out.println("\nTotal Tests: " + totalTests);
         System.out.println("Passed Tests: " + passedTests);
         System.out.println("Failed Tests: " + failedTests+"\n");
+
+        testResults.clear();
     }
 }
