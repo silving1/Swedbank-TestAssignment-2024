@@ -8,6 +8,8 @@ import java.util.Map;
 //thats what is needed when the task says "Create test summary". So I made this.
 public class TestSummary implements TestWatcher {
 
+    //Save class name for better understanding
+    private String testClassName;
     //Binds together test name and its result, true for passed, false for failed
     private final Map<String, Boolean> testResults = new HashMap<>();
 
@@ -21,6 +23,10 @@ public class TestSummary implements TestWatcher {
         testResults.put(context.getDisplayName(), true);
     }
 
+    //Saves class name as string
+    public void setTestClassName(String testClassName) {
+        this.testClassName = testClassName;
+    }
     //Callable method, that creates a summary for tester
     public void printTestSummary() {
         //Finds total, calculates passed and failed tests
@@ -29,7 +35,7 @@ public class TestSummary implements TestWatcher {
         int failedTests = totalTests - passedTests;
 
         //Prints out each test individually
-        System.out.println("Test Summary:");
+        System.out.println(testClassName + " Test Summary:");
         testResults.forEach((testName, testResult) -> {
             if (testResult) System.out.println("  - " + testName + ": Passed");
             else System.out.println("  - " + testName + ": Failed");
@@ -38,6 +44,6 @@ public class TestSummary implements TestWatcher {
         //Prints out total tests summary
         System.out.println("\nTotal Tests: " + totalTests);
         System.out.println("Passed Tests: " + passedTests);
-        System.out.println("Failed Tests: " + failedTests);
+        System.out.println("Failed Tests: " + failedTests+"\n");
     }
 }

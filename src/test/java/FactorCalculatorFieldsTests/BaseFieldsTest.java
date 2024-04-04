@@ -4,20 +4,17 @@ import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.By;
-
-import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static java.time.Duration.ofSeconds;
 
 //Theoretically, this class should extend FactorCalculatorTests, because before every fields test,
 //the base calculator tests must be passed. For example, cannot continue with field test if field
 //doesn't exist. But due to excessive testing, this can't be done.
-@ExtendWith(TestSummary.class)
 public abstract class BaseFieldsTest{
 
     @RegisterExtension
@@ -30,10 +27,11 @@ public abstract class BaseFieldsTest{
     public void setUp() {
         Configuration.browser = "chrome";
         open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
-        if($("button.ui-cookie-consent__accept-button").is(visible, Duration.ofSeconds(3))){
+        if($("button.ui-cookie-consent__accept-button").is(visible, ofSeconds(3))){
             $(byText("Accept")).click();
         }
         errorMsg = $("ui-hint[type=error]");
+        testSummary.setTestClassName(this.getClass().getSimpleName());
     }
     //After each test, the website is closed and can start over with fresh test inputs
     @AfterEach
