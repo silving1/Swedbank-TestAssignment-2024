@@ -51,13 +51,28 @@ public class FactorCalculatorFunctionalityTests extends FactorCalculatorTests{
     }
 
     //Test case to verify if factoring calculators result equals with manually calculated result with
-    //manually inserted values, where Commission Fee is negative
+    //manually inserted values, where Invoice Amount is a large number
     @Test
     public void manualCalculatorInsertedValuesLarge() {
         //Changing the field values
         setValueAndVerify("D5", "1023469");
         setValueAndVerify("D7", "3");
         setValueAndVerify("D9", "10");
+        setSelectOptionAndVerify("D6", "75");
+        setSelectOptionAndVerify("D8", "30");
+
+        //Check, if the manual calculations and website calculations match
+        manualFactoringCalculator();
+    }
+
+    //Test case to verify if factoring calculators result equals with manually calculated result with
+    //manually inserted values, where Commission Fee is negative
+    @Test
+    public void manualCalculatorInsertedValuesNegativeComFee() {
+        //Changing the field values
+        setValueAndVerify("D5", "7777");
+        setValueAndVerify("D7", "3");
+        setValueAndVerify("D9", "-10");
         setSelectOptionAndVerify("D6", "75");
         setSelectOptionAndVerify("D8", "30");
 
