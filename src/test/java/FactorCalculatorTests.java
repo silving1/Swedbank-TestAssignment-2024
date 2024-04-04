@@ -66,6 +66,17 @@ public class FactorCalculatorTests {
         $(By.id("D8")).should(exist); $(By.id("D8")).shouldBe(visible);
     }
 
+    //Test case to verify if fields are interactable by the user
+    @Test
+    public void areFieldsInteractable() {
+        //Finds fields id, checks if it isn't disabled
+        $(By.id("D5")).shouldBe(enabled);
+        $(By.id("D6")).shouldBe(enabled);
+        $(By.id("D7")).shouldBe(enabled);
+        $(By.id("D8")).shouldBe(enabled);
+        $(By.id("D9")).shouldBe(enabled);
+    }
+
     //Test case to verify if the user can interact with the calculators fields
     @Test
     public void canAddValuesToFields() {
