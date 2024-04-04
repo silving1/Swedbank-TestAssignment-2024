@@ -45,7 +45,7 @@ public class InvoiceAmountTests extends BaseFieldsTest {
     public void falseInvoiceAmountValueAndCalculate() {
         //Firstly checks, if initial calculation is done
         errorMsg.shouldNot(exist);
-        FCTests.doesCalculateButtonCalculate();
+        doesCalculateButtonCalculate();
 
         //Then adding user input the website doesn't like
         testValueInput("D5","0", "Value must be greater than or equal 1.");
@@ -60,7 +60,7 @@ public class InvoiceAmountTests extends BaseFieldsTest {
     public void trueInvoiceAmountValueAndCalculate() {
         //Firstly checks, if initial calculation is done
         errorMsg.shouldNot(exist);
-        FCTests.doesCalculateButtonCalculate();
+        doesCalculateButtonCalculate();
 
         //Then adding user input the website likes
         testValueInput("D5","10000000000000000000000000000", "");

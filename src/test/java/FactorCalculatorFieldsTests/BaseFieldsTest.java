@@ -1,35 +1,22 @@
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public abstract class BaseFieldsTest {
+//Extends FactorCalculatorTests, because before every fields test, the base calculator
+//tests must be passed. For example, cannot continue with field test if field doesn't exist.
+public abstract class BaseFieldsTest extends FactorCalculatorTests{
     protected SelenideElement errorMsg;
-    FactorCalculatorTests FCTests = new FactorCalculatorTests();
 
     //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
     @BeforeEach
     public void setUp() {
-        Configuration.browser = "chrome";
-        open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
-        if ($("button.ui-cookie-consent__accept-button").is(visible, Duration.ofSeconds(3))) {
-            $(byText("Accept")).click();
-        }
+        // Call the setUp() method of FactorCalculatorTests
+        super.setUp();
         errorMsg = $("ui-hint[type=error]");
-    }
-
-    //After each test, the website is closed and can start over with fresh test inputs
-    @AfterEach
-    public void tearDown() {
-        closeWebDriver();
     }
 
     // Helper method to test a value in the corresponding field and validate the error message
@@ -59,9 +46,7 @@ public abstract class BaseFieldsTest {
     //Helper method to loop each checkable value through the list
     protected boolean doesValueExist(ElementsCollection elementList, String valueToCheck) {
         for (SelenideElement element : elementList) {
-            if (element.equals(valueToCheck)) {
-                return true;
-            }
+            if (element.equals(valueToCheck)) return true;
         }
         return false;
     }
