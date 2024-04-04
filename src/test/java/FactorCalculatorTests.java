@@ -1,9 +1,12 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.By;
 import java.time.Duration;
 
@@ -12,24 +15,29 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(TestSummary.class)
 public class FactorCalculatorTests {
+
+    @RegisterExtension
+    static TestSummary testSummary = new TestSummary();
 
     //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
     @BeforeEach
     public void setUp() {
         Configuration.browser = "chrome";
         open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
-        //WebDriverRunner.getWebDriver().manage().window().maximize();
         if($("button.ui-cookie-consent__accept-button").is(visible, Duration.ofSeconds(3))){
             $(byText("Accept")).click();
         }
-
     }
     //After each test, the website is closed and can start over with fresh test inputs
     @AfterEach
     public void tearDown() {
         closeWebDriver();
     }
+    //After all tests are done, the test summary will appear on clipboard
+    @AfterAll
+    public static void printSummary() { testSummary.printTestSummary(); }
 
     //Test case to verify if the factoring calculator URL exists
     @Test
@@ -126,7 +134,7 @@ public class FactorCalculatorTests {
     }
 
     //Test case to verify if calculate button can be clicked multiple times and still
-    // correctly calculates the websites default values
+    //correctly calculates the websites default values
     @Test
     public void doesCalculateButtonCalculateMultiple() {
         //Calculate button is clicked by its id, results are shown by their ids
