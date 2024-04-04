@@ -44,7 +44,7 @@ public class CommissionFeeTests extends BaseFieldsTest {
     public void falseCommissionFeeValueAndCalculate() {
         //Firstly checks, if initial calculation is done
         errorMsg.shouldNot(exist);
-        doesCalculateButtonCalculate();
+        FCTests.doesCalculateButtonCalculate();
 
         //Then adding input the website doesn't like
         testValueInput("D9","aaa", "Please fill out this field.");
@@ -59,7 +59,7 @@ public class CommissionFeeTests extends BaseFieldsTest {
     public void trueCommissionFeeValueAndCalculate() {
         //Firstly checks, if initial calculation is done
         errorMsg.shouldNot(exist);
-        doesCalculateButtonCalculate();
+        FCTests.doesCalculateButtonCalculate();
 
         //Then adding input the website likes
         testValueInput("D9","-8888", "");

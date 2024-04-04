@@ -44,7 +44,7 @@ public class InterestRateTests extends BaseFieldsTest {
     public void falseInterestRateValueAndCalculate() {
         //Firstly checks, if initial calculation is done
         errorMsg.shouldNot(exist);
-        doesCalculateButtonCalculate();
+        FCTests.doesCalculateButtonCalculate();
 
         //Then adding input the website doesn't like
         testValueInput("D7","-10", "Value must be greater than or equal 0.");
@@ -59,7 +59,7 @@ public class InterestRateTests extends BaseFieldsTest {
     public void trueInterestRateValueAndCalculate() {
         //Firstly checks, if initial calculation is done
         errorMsg.shouldNot(exist);
-        doesCalculateButtonCalculate();
+        FCTests.doesCalculateButtonCalculate();
 
         //Then adding input the website likes
         testValueInput("D7","0", "");
