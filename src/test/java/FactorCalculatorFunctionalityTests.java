@@ -1,11 +1,44 @@
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.*;
+import static java.time.Duration.ofSeconds;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FactorCalculatorFunctionalityTests extends FactorCalculatorTests{
+//Should extend FactorCalculatorTests, but due to repeating FactorCalculatorTests tests
+//I created a new setup
+public class FactorCalculatorFunctionalityTests {
+
+    @RegisterExtension
+    static TestSummary testSummary = new TestSummary();
+    static FactorCalculatorTests FCTests = new FactorCalculatorTests();
+
+    //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
+    @BeforeEach
+    public void setUp() {
+        Configuration.browser = "chrome";
+        open("https://www.swedbank.lt/business/finance/trade/factoring?language=ENG");
+        if($("button.ui-cookie-consent__accept-button").is(visible, ofSeconds(3))){
+            $(byText("Accept")).click();
+        }
+        testSummary.setTestClassName(this.getClass().getSimpleName());
+    }
+    //After each test, the website is closed and can start over with fresh test inputs
+    @AfterEach
+    public void tearDown() {
+        closeWebDriver();
+    }
+    //After all tests are done, the test summary will appear on clipboard
+    @AfterAll
+    public static void printSummary() { testSummary.printTestSummary(); }
 
     //Test case to verify if factoring calculators result equals with manually calculated result
     @Test
@@ -40,11 +73,11 @@ public class FactorCalculatorFunctionalityTests extends FactorCalculatorTests{
     @Test
     public void manualCalculatorInsertedValues() {
         //Changing the field values
-        setValueAndVerify("D5", "100");
-        setValueAndVerify("D7", "20");
-        setValueAndVerify("D9", "5");
-        setSelectOptionAndVerify("D6", "90");
-        setSelectOptionAndVerify("D8", "120");
+        FCTests.setValueAndVerify("D5", "100");
+        FCTests.setValueAndVerify("D7", "20");
+        FCTests.setValueAndVerify("D9", "5");
+        FCTests.setSelectOptionAndVerify("D6", "90");
+        FCTests.setSelectOptionAndVerify("D8", "120");
 
         //Check, if the manual calculations and website calculations match
         manualFactoringCalculator();
@@ -55,11 +88,11 @@ public class FactorCalculatorFunctionalityTests extends FactorCalculatorTests{
     @Test
     public void manualCalculatorInsertedValuesLarge() {
         //Changing the field values
-        setValueAndVerify("D5", "1023469");
-        setValueAndVerify("D7", "3");
-        setValueAndVerify("D9", "10");
-        setSelectOptionAndVerify("D6", "75");
-        setSelectOptionAndVerify("D8", "30");
+        FCTests.setValueAndVerify("D5", "1023469");
+        FCTests.setValueAndVerify("D7", "3");
+        FCTests.setValueAndVerify("D9", "10");
+        FCTests.setSelectOptionAndVerify("D6", "75");
+        FCTests.setSelectOptionAndVerify("D8", "30");
 
         //Check, if the manual calculations and website calculations match
         manualFactoringCalculator();
@@ -70,11 +103,11 @@ public class FactorCalculatorFunctionalityTests extends FactorCalculatorTests{
     @Test
     public void manualCalculatorInsertedValuesNegativeComFee() {
         //Changing the field values
-        setValueAndVerify("D5", "7777");
-        setValueAndVerify("D7", "3");
-        setValueAndVerify("D9", "-10");
-        setSelectOptionAndVerify("D6", "75");
-        setSelectOptionAndVerify("D8", "30");
+        FCTests.setValueAndVerify("D5", "7777");
+        FCTests.setValueAndVerify("D7", "3");
+        FCTests.setValueAndVerify("D9", "-10");
+        FCTests.setSelectOptionAndVerify("D6", "75");
+        FCTests.setSelectOptionAndVerify("D8", "30");
 
         //Check, if the manual calculations and website calculations match
         manualFactoringCalculator();

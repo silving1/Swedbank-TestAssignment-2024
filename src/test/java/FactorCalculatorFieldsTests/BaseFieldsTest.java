@@ -19,7 +19,7 @@ public abstract class BaseFieldsTest{
 
     @RegisterExtension
     static TestSummary testSummary = new TestSummary();
-    FactorCalculatorTests FCTests = new FactorCalculatorTests();
+    static FactorCalculatorTests FCTests = new FactorCalculatorTests();
     protected SelenideElement errorMsg;
 
     //For each test, the factoring calculator website is opened and cookies accepted for visual purposes
