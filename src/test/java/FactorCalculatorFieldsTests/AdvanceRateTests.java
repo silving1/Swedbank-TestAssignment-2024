@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AdvanceRateTests extends BaseFieldsTest {
 
@@ -24,7 +24,7 @@ public class AdvanceRateTests extends BaseFieldsTest {
     @Test
     public void isFalseAdvanceRateValues() {
         //List together all elements
-        ElementsCollection elementList = id.getSelectedOptions();
+        ElementsCollection elementList = id.getOptions();
 
         //Check, if a false value is in list using helper method in BaseFieldsTest
         assertFalse(doesValueExist(elementList, "100"));
