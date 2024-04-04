@@ -114,6 +114,22 @@ public class FactorCalculatorTests {
         $("#result").shouldHave(text("52.50"));
     }
 
+    //Test case to verify if calculate button can be clicked multiple times and still
+    // correctly calculates the websites default values
+    @Test
+    public void doesCalculateButtonCalculateMultiple() {
+        //Calculate button is clicked by its id, results are shown by their ids
+        $(By.id("calculate-factoring")).click();
+        $("#result_perc").shouldHave(text("0.53"));
+        $("#result").shouldHave(text("52.50"));
+        $(By.id("calculate-factoring")).click();
+        $(By.id("calculate-factoring")).click();
+        $(By.id("calculate-factoring")).click();
+        //Checks, if the result has changed since last true result
+        $("#result_perc").shouldHave(text("0.53"));
+        $("#result").shouldHave(text("52.50"));
+    }
+
 
     //Helper method that verifies if added value is also shown to user as that value
     protected void setValueAndVerify(String id, String expected) {
